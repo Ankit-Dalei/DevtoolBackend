@@ -7,6 +7,7 @@ import { changePassword, sendOtp, verifyOtp } from "./BusinessLogic/userPassword
 import { getTotalDeveloperByRole, getTotalUsersByRole } from "./BusinessLogic/AdminDashboard/admindashboarddata.mjs";
 import { deleteUserById, getAllDeveloper, getAllUsers, updateUserRoleByEmail } from "./BusinessLogic/AdminDashboard/admintotalUser.mjs";
 import { createTool, deleteTool, getAllTools, getToolById, getToolByIdAndMainCatagory, getToolByIdAndSubCatagory, getToolByIdAndSubSubCatagory, updateTool } from "./BusinessLogic/DeveloperDashboard/toolManagement.mjs";
+import bodyParser from 'body-parser';
 
 // mongoDb connection
 mongoose.connect('mongodb://127.0.0.1:27017/test')
@@ -16,9 +17,10 @@ mongoose.connect('mongodb://127.0.0.1:27017/test')
 // /port connection
 const app = express();
 const port = 8080;
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(cors());
-app.use(express.urlencoded({ extended: false }));
-
+app.use(express.json());
 // Signup end points
 app.post('/Signup',logindata,(req, res) => {
   console.log(req.body)
@@ -27,7 +29,7 @@ app.post('/Signup',logindata,(req, res) => {
   });
 });
 // login end points
-app.get('/login',userAuth);
+app.post('/login',userAuth);
 // Forgot password end point
 app.post('/send-otp', sendOtp);
 app.post('/verify-otp', verifyOtp);

@@ -10,8 +10,9 @@ const upload = multer({
 export const logindata = [
     upload.single('profilePhoto'),
     async (req, res, next) => {
-        const { password, gender, Username, email, lastname, firstName } = req.body;
-        const profilePhoto = req.file;
+        const { password, gender, Username, email, lastname, firstName,profilePhoto } = req.body;
+        // const profilePhoto = req.file;
+        // console.log(req.file)
 
         if (!password || !gender || !Username || !email || !lastname || !firstName || !profilePhoto) {
             return res.status(400).send(req.body);
