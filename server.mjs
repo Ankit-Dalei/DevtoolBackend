@@ -41,7 +41,7 @@ app.get('/gettotalUserCounts',getTotalUsersByRole)
 app.get('/gettotalDeveloperCounts',getTotalDeveloperByRole)
 app.get('/getallUser',getAllUsers)
 app.get('/getallDeveloper',getAllDeveloper)
-app.get('/updateUserRoleByEmail',updateUserRoleByEmail)
+app.put('/updateUserRoleByEmail',updateUserRoleByEmail)
 app.delete('/users/:id', deleteUserById);
 // Developer end points
 app.post('/toolCreated', createTool);
