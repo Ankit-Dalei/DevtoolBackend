@@ -42,7 +42,7 @@ app.get('/gettotalDeveloperCounts',getTotalDeveloperByRole)
 app.get('/getallUser',getAllUsers)
 app.get('/getallDeveloper',getAllDeveloper)
 app.put('/updateUserRoleByEmail',updateUserRoleByEmail)
-app.delete('/users/:id', deleteUserByEmail);
+app.delete('/users/:email', deleteUserByEmail);
 // Developer end points
 app.post('/toolCreated', createTool);
 app.get('/tools', getAllTools);
