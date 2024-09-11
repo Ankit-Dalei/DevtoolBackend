@@ -31,12 +31,12 @@ export const getAllDeveloper=async (req, res) => {
 };
 
 
-export const deleteUserById = async (req, res) => {
-    const { id } = req.params; // Get the user ID from request parameters
+export const deleteUserByEmail = async (req, res) => {
+    const { email } = req.params; // Get the user email from request parameters
 
     try {
-        // Find and delete the user by ID
-        const deletedUser = await User.findByIdAndDelete(id);
+        // Find and delete the user by email
+        const deletedUser = await User.findOneAndDelete({ email });
 
         if (!deletedUser) {
             return res.status(404).json({ message: 'User not found' });
@@ -49,6 +49,7 @@ export const deleteUserById = async (req, res) => {
         res.status(500).json({ message: 'Failed to delete user' });
     }
 };
+
 
 
 export const updateUserRoleByEmail = [

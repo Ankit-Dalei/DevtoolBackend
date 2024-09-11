@@ -5,7 +5,7 @@ import { logindata } from "./BusinessLogic/userlogin.mjs";
 import { userAuth } from "./BusinessLogic/userAuth.mjs";
 import { changePassword, sendOtp, verifyOtp } from "./BusinessLogic/userPasswordUpdate.mjs";
 import { getTotalDeveloperByRole, getTotalUsersByRole } from "./BusinessLogic/AdminDashboard/admindashboarddata.mjs";
-import { deleteUserById, getAllDeveloper, getAllUsers, updateUserRoleByEmail } from "./BusinessLogic/AdminDashboard/admintotalUser.mjs";
+import { deleteUserByEmail, getAllDeveloper, getAllUsers, updateUserRoleByEmail } from "./BusinessLogic/AdminDashboard/admintotalUser.mjs";
 import { createTool, deleteTool, getAllTools, getToolById, getToolByIdAndMainCatagory, getToolByIdAndSubCatagory, getToolByIdAndSubSubCatagory, updateTool } from "./BusinessLogic/DeveloperDashboard/toolManagement.mjs";
 import bodyParser from 'body-parser';
 
@@ -42,7 +42,7 @@ app.get('/gettotalDeveloperCounts',getTotalDeveloperByRole)
 app.get('/getallUser',getAllUsers)
 app.get('/getallDeveloper',getAllDeveloper)
 app.put('/updateUserRoleByEmail',updateUserRoleByEmail)
-app.delete('/users/:id', deleteUserById);
+app.delete('/users/:id', deleteUserByEmail);
 // Developer end points
 app.post('/toolCreated', createTool);
 app.get('/tools', getAllTools);
