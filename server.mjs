@@ -6,7 +6,7 @@ import { userAuth } from "./BusinessLogic/userAuth.mjs";
 import { changePassword, sendOtp, verifyOtp } from "./BusinessLogic/userPasswordUpdate.mjs";
 import { getTotalDeveloperByRole, getTotalUsersByRole } from "./BusinessLogic/AdminDashboard/admindashboarddata.mjs";
 import { deleteUserByEmail, getAllDeveloper, getAllUsers, updateUserRoleByEmail } from "./BusinessLogic/AdminDashboard/admintotalUser.mjs";
-import { createTool, deleteTool, getAllTools, getToolById, getToolByIdAndMainCatagory, getToolByIdAndSubCatagory, getToolByIdAndSubSubCatagory, updateTool } from "./BusinessLogic/DeveloperDashboard/toolManagement.mjs";
+import { createTool, deleteTool, getAllTools, getToolById, getToolByIdAndMainCatagory, getToolByIdAndSubCatagory, getToolByIdAndSubSubCatagory, getTotalCalculatorCount, getTotalConverterCount, getTotalGeneratorCount, getTotaltoolCount, updateTool } from "./BusinessLogic/DeveloperDashboard/toolManagement.mjs";
 import bodyParser from 'body-parser';
 
 // mongoDb connection
@@ -46,6 +46,10 @@ app.delete('/users/:email', deleteUserByEmail);
 // Developer end points
 app.post('/toolCreated', createTool);
 app.get('/tools', getAllTools);
+app.get('/toolsCount', getTotaltoolCount);
+app.get('/toolsCalculatorCount', getTotalCalculatorCount);
+app.get('/toolsConverterCount', getTotalConverterCount);
+app.get('/toolsGeneratorCount', getTotalGeneratorCount);
 app.get('/tools/:id', getToolById);
 app.get('/toolsByMainCatagory/:id/:toolMainCatagory', getToolByIdAndMainCatagory);
 app.get('/toolsBySubCatagory/:id/:toolSubCatagory', getToolByIdAndSubCatagory);

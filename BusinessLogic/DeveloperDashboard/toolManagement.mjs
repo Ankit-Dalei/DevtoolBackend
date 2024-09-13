@@ -77,6 +77,58 @@ export const getAllTools = async (req, res) => {
     }
 };
 
+export const getTotaltoolCount = async (req, res) => {
+    try {
+        // Query to count users with the role "User"
+        const ToolCount = await Tool.countDocuments();
+
+        // Respond with the count
+        res.status(200).json({ totalTools: ToolCount });
+    } catch (error) {
+        console.error('Error fetching user count:', error);
+        res.status(500).json({ message: 'Failed to fetch tool count' });
+    }
+};
+
+
+export const getTotalCalculatorCount = async (req, res) => {
+    try {
+        // Query to count users with the role "User"
+        const ToolCount = await Tool.countDocuments({ toolMainCatagory: 'MC1' });
+
+        // Respond with the count
+        res.status(200).json({ totalTools: ToolCount });
+    } catch (error) {
+        console.error('Error fetching user count:', error);
+        res.status(500).json({ message: 'Failed to fetch tool count' });
+    }
+};
+
+export const getTotalConverterCount = async (req, res) => {
+    try {
+        // Query to count users with the role "User"
+        const ToolCount = await Tool.countDocuments({ toolMainCatagory: 'MC2' });
+
+        // Respond with the count
+        res.status(200).json({ totalTools: ToolCount });
+    } catch (error) {
+        console.error('Error fetching user count:', error);
+        res.status(500).json({ message: 'Failed to fetch tool count' });
+    }
+};
+
+export const getTotalGeneratorCount = async (req, res) => {
+    try {
+        // Query to count users with the role "User"
+        const ToolCount = await Tool.countDocuments({ toolMainCatagory: 'MC3' });
+
+        // Respond with the count
+        res.status(200).json({ totalTools: ToolCount });
+    } catch (error) {
+        console.error('Error fetching user count:', error);
+        res.status(500).json({ message: 'Failed to fetch tool count' });
+    }
+};
 export const getToolById = async (req, res) => {
     const { id } = req.params;
     try {
