@@ -8,7 +8,7 @@ const upload = multer({
 });
 
 export const logindata = [
-    upload.single('profilePhoto'),
+    // upload.single('profilePhoto'),
     async (req, res, next) => {
         const { password, gender, Username, email, lastname, firstName,profilePhoto } = req.body;
         // const profilePhoto = req.file;
@@ -20,7 +20,7 @@ export const logindata = [
         }
         const role="User"
         const newUser = new User({
-            profilePhoto: profilePhoto.buffer,
+            profilePhoto: profilePhoto,
             firstName,
             lastname,
             email,

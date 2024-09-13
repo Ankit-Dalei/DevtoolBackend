@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 export const usertableSchema= new mongoose.Schema({
     profilePhoto:{
-        type: Buffer,
+        type: String,
         contentType: String,
     },
     firstName:{
