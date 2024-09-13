@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 export const toolSchema = new mongoose.Schema({
     toolLogo: {
-        type: Buffer,
+        type: String,
         contentType: String,
     },
     toolName: {
