@@ -13,6 +13,7 @@ export const logindata = [
         const { password, gender, Username, email, lastname, firstName,profilePhoto } = req.body;
         // const profilePhoto = req.file;
         // console.log(req.file)
+        // hello
 
         if (!password || !gender || !Username || !email || !lastname || !firstName || !profilePhoto) {
             return res.status(400).send(req.body);
