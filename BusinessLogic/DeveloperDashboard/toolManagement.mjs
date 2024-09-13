@@ -94,7 +94,7 @@ export const getTotaltoolCount = async (req, res) => {
 export const getTotalCalculatorCount = async (req, res) => {
     try {
         // Query to count users with the role "User"
-        const ToolCount = await Tool.countDocuments({ toolMainCatagory: 'MC1' });
+        const ToolCount = await Tool.countDocuments({ toolMainCatagory: 'Calculator' });
 
         // Respond with the count
         res.status(200).json({ totalTools: ToolCount });
@@ -107,7 +107,7 @@ export const getTotalCalculatorCount = async (req, res) => {
 export const getTotalConverterCount = async (req, res) => {
     try {
         // Query to count users with the role "User"
-        const ToolCount = await Tool.countDocuments({ toolMainCatagory: 'MC2' });
+        const ToolCount = await Tool.countDocuments({ toolMainCatagory: 'Converter' });
 
         // Respond with the count
         res.status(200).json({ totalTools: ToolCount });
@@ -120,7 +120,7 @@ export const getTotalConverterCount = async (req, res) => {
 export const getTotalGeneratorCount = async (req, res) => {
     try {
         // Query to count users with the role "User"
-        const ToolCount = await Tool.countDocuments({ toolMainCatagory: 'MC3' });
+        const ToolCount = await Tool.countDocuments({ toolMainCatagory: 'Generator' });
 
         // Respond with the count
         res.status(200).json({ totalTools: ToolCount });
