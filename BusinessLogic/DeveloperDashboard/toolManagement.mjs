@@ -131,6 +131,7 @@ export const getTotalGeneratorCount = async (req, res) => {
 };
 export const getToolById = async (req, res) => {
     const { id } = req.params;
+    console.log('ID received:', id);
     try {
         const tool = await Tool.findById(id);
         if (!tool) {
