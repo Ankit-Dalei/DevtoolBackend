@@ -15,7 +15,7 @@ export const logindata = [
         // console.log(req.file)
         // hello
 
-        if (!password || !gender || !Username || !email || !lastname || !firstName || !profilePhoto) {
+        if (!password || !gender || !Username || !email || !lastname || !firstName) {
             return res.status(400).send(req.body);
         }
         const role="User"

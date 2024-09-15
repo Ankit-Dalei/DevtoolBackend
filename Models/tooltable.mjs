@@ -15,7 +15,7 @@ export const toolSchema = new mongoose.Schema({
     },
     toolStatus: {
         type: String,
-        enum: ['Active', 'Not Working', 'Under Development'],
+        enum: ['Working', 'Not Working', 'Under Development'],
         required: true,
     },
     toolSubCatagory: {

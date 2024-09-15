@@ -10,7 +10,7 @@ import { createTool, deleteTool, getAllTools, getToolById, getToolByIdAndMainCat
 import bodyParser from 'body-parser';
 
 // mongoDb connection
-mongoose.connect('mongodb://127.0.0.1:27017/test')
+mongoose.connect('mongodb://127.0.0.1:27017/DevToolsB')
 .then(()=>{console.log("mongoDb connected")})
 .catch((err)=>{console.log("error",err)});
 
