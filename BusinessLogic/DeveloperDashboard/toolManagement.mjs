@@ -145,7 +145,7 @@ export const getToolById = async (req, res) => {
 };
 
 export const getToolByIdAndMainCatagory = async (req, res) => {
-    const { id, toolMainCatagory } = req.params; // Receiving id and toolSubSubCatagory from URL parameters
+    const { toolMainCatagory } = req.params; // Receiving id and toolSubSubCatagory from URL parameters
 
     try {
         // Fetch the tool by ID
@@ -169,55 +169,44 @@ export const getToolByIdAndMainCatagory = async (req, res) => {
     }
 };
 
-export const getToolByIdAndSubCatagory = async (req, res) => {
-    const { id, toolSubCatagory } = req.params; // Receiving id and toolSubSubCatagory from URL parameters
+export const getToolBySubCatagory = async (req, res) => {
+    const { toolSubCatagory } = req.params; // Receiving toolSubCatagory from URL parameters
 
     try {
-        // Fetch the tool by ID
-        const tool = await Tool.findById(id);
+        // Fetch tools by toolSubCatagory
+        const tools = await Tool.find({ toolSubCatagory });
 
-        // Check if the tool exists
-        if (!tool) {
-            return res.status(404).json({ message: 'Tool not found' });
+        // Check if any tools were found
+        if (tools.length === 0) {
+            return res.status(404).json({ message: 'No tools found for the provided sub-category' });
         }
 
-        // Check if the provided toolSubSubCatagory matches the one stored in the database
-        if (tool.toolSubCatagory !== toolSubCatagory) {
-            return res.status(400).json({ message: 'Provided toolSubSubCatagory does not match the one in the database' });
-        }
-
-        // Respond with the tool data
-        res.status(200).json({ tool });
+        // Respond with the list of tools
+        res.status(200).json({ tools });
     } catch (error) {
-        console.error('Error fetching tool:', error);
-        res.status(500).json({ message: 'Failed to fetch tool' });
+        console.error('Error fetching tools:', error);
+        res.status(500).json({ message: 'Failed to fetch tools' });
     }
 };
 
-export const getToolByIdAndSubSubCatagory = async (req, res) => {
-    const { id, toolSubSubCatagory } = req.params; // Receiving id and toolSubSubCatagory from URL parameters
+
+export const getToolBySubSubCatagory = async (req, res) => {
+    const { toolSubSubCatagory } = req.params;
 
     try {
-        // Fetch the tool by ID
-        const tool = await Tool.findById(id);
+        const tools = await Tool.find({ toolSubSubCatagory });
 
-        // Check if the tool exists
-        if (!tool) {
-            return res.status(404).json({ message: 'Tool not found' });
+        if (tools.length === 0) {
+            return res.status(404).json({ message: 'No tools found for the provided sub-sub-category' });
         }
 
-        // Check if the provided toolSubSubCatagory matches the one stored in the database
-        if (tool.toolSubSubCatagory !== toolSubSubCatagory) {
-            return res.status(400).json({ message: 'Provided toolSubSubCatagory does not match the one in the database' });
-        }
-
-        // Respond with the tool data
-        res.status(200).json({ tool });
+        res.status(200).json({ tools });
     } catch (error) {
-        console.error('Error fetching tool:', error);
-        res.status(500).json({ message: 'Failed to fetch tool' });
+        console.error('Error fetching tools:', error);
+        res.status(500).json({ message: 'Failed to fetch tools' });
     }
 };
+
 
 export const updateTool = async (req, res) => {
     const { id } = req.params;
@@ -247,3 +236,43 @@ export const deleteTool = async (req, res) => {
         res.status(500).json({ message: 'Failed to delete tool' });
     }
 };
+
+
+
+
+// 
+
+export const getCalculatorTools = async (req, res) => {
+    try {
+        const tools = await Tool.find({ toolMainCatagory: 'Calculator' });
+
+        // Respond with the list of tools
+        res.status(200).json({ totalTools: tools });
+    } catch (error) {
+        console.error('Error fetching tools:', error);
+        res.status(500).json({ message: 'Failed to fetch tools' });
+    }
+};
+
+export const getConverterTools = async (req, res) => {
+    try {
+        const tools = await Tool.find({ toolMainCatagory: 'Converter' });
+
+        res.status(200).json({ totalTools: tools });
+    } catch (error) {
+        console.error('Error fetching tools:', error);
+        res.status(500).json({ message: 'Failed to fetch tools' });
+    }
+};
+
+export const getGeneratorTools = async (req, res) => {
+    try {
+        const tools = await Tool.find({ toolMainCatagory: 'Generator' });
+
+        res.status(200).json({ totalTools: tools });
+    } catch (error) {
+        console.error('Error fetching tools:', error);
+        res.status(500).json({ message: 'Failed to fetch tools' });
+    }
+};
+

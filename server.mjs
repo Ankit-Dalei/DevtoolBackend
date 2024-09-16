@@ -6,11 +6,11 @@ import { userAuth } from "./BusinessLogic/userAuth.mjs";
 import { changePassword, sendOtp, verifyOtp } from "./BusinessLogic/userPasswordUpdate.mjs";
 import { getTotalDeveloperByRole, getTotalUsersByRole } from "./BusinessLogic/AdminDashboard/admindashboarddata.mjs";
 import { deleteUserByEmail, getAllDeveloper, getAllUsers, updateUserRoleByEmail } from "./BusinessLogic/AdminDashboard/admintotalUser.mjs";
-import { createTool, deleteTool, getAllTools, getToolById, getToolByIdAndMainCatagory, getToolByIdAndSubCatagory, getToolByIdAndSubSubCatagory, getTotalCalculatorCount, getTotalConverterCount, getTotalGeneratorCount, getTotaltoolCount, updateTool } from "./BusinessLogic/DeveloperDashboard/toolManagement.mjs";
+import { createTool, deleteTool, getAllTools, getCalculatorTools, getConverterTools, getGeneratorTools, getToolById, getToolBySubCatagory, getToolBySubSubCatagory, getTotalCalculatorCount, getTotalConverterCount, getTotalGeneratorCount, getTotaltoolCount, updateTool } from "./BusinessLogic/DeveloperDashboard/toolManagement.mjs";
 import bodyParser from 'body-parser';
 
 // mongoDb connection
-mongoose.connect('mongodb://127.0.0.1:27017/DevToolsB')
+mongoose.connect('mongodb://127.0.0.1:27017/test')
 .then(()=>{console.log("mongoDb connected")})
 .catch((err)=>{console.log("error",err)});
 
@@ -50,10 +50,13 @@ app.get('/toolsCount', getTotaltoolCount);
 app.get('/toolsCalculatorCount', getTotalCalculatorCount);
 app.get('/toolsConverterCount', getTotalConverterCount);
 app.get('/toolsGeneratorCount', getTotalGeneratorCount);
+app.get('/toolsCalculator', getCalculatorTools);
+app.get('/toolsConverter', getConverterTools);
+app.get('/toolsGenerator', getGeneratorTools);
 app.get('/tools/:id', getToolById);
-app.get('/toolsByMainCatagory/:id/:toolMainCatagory', getToolByIdAndMainCatagory);
-app.get('/toolsBySubCatagory/:id/:toolSubCatagory', getToolByIdAndSubCatagory);
-app.get('/toolsBySubSubCatagory/:id/:toolSubSubCatagory', getToolByIdAndSubSubCatagory);
+// app.get('/toolsByMainCatagory/:toolMainCatagory', getToolByIdAndMainCatagory);
+app.get('/toolsBySubCatagory/:toolSubCatagory', getToolBySubCatagory);
+app.get('/toolsBySubSubCatagory/:toolSubSubCatagory', getToolBySubSubCatagory);
 app.put('/toolsUpdate/:id', updateTool);
 app.delete('/toolsDelete/:id', deleteTool);
 
