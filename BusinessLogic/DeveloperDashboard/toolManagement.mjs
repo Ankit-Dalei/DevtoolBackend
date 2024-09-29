@@ -276,3 +276,38 @@ export const getGeneratorTools = async (req, res) => {
     }
 };
 
+
+
+
+// file write code
+export const getToolByIdforrender = async (req, res) => {
+    const { id } = req.body; // Fetch the tool id from the request body
+
+    try {
+        // Fetch tool from the database using the id
+        const tool = await Tool.findById(id);
+
+        if (!tool) {
+            return res.status(404).json({ message: 'Tool not found' });
+        }
+
+        const toolCode = tool.toolCode;
+
+        // Define the path to the target JS file
+        const filePath = path.join(__dirname, 'tooloutput.js');
+
+        // Write the toolCode to tooloutput.js
+        fs.writeFile(filePath, toolCode, (err) => {
+            if (err) {
+                console.error('Error writing to file:', err);
+                return res.status(500).json({ message: 'Failed to write toolCode to file' });
+            }
+
+            console.log('ToolCode written to tooloutput.js');
+            return res.status(200).json({ message: 'ToolCode successfully written to file' });
+        });
+    } catch (error) {
+        console.error('Error fetching tool or writing to file:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
