@@ -1,5 +1,11 @@
 import { Tool } from "../../Services/toolService.mjs";
+import path from 'path';
+import fs from 'fs';
+import { fileURLToPath } from 'url';
 
+// Recreate __dirname in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export const createTool = async (req, res) => {
     const {
@@ -281,21 +287,22 @@ export const getGeneratorTools = async (req, res) => {
 
 // file write code
 export const getToolByIdforrender = async (req, res) => {
-    const { id } = req.body; // Fetch the tool id from the request body
-
+    const { id } = req.params; // Fetch the tool id from the request body
+    // console.log(id)
     try {
         // Fetch tool from the database using the id
         const tool = await Tool.findById(id);
+        // console.log(tool)
 
         if (!tool) {
             return res.status(404).json({ message: 'Tool not found' });
         }
 
         const toolCode = tool.toolCode;
-
+        // console.log(toolCode)
         // Define the path to the target JS file
-        const filePath = path.join(__dirname, 'tooloutput.js');
-
+        const filePath = path.join(__dirname, '../../../DevToolsB Frontend/src/Components/Tools/CategoryAndSubcategory Handling/CGCcodeRenderHandling.jsx');
+        // console.log(filePath)
         // Write the toolCode to tooloutput.js
         fs.writeFile(filePath, toolCode, (err) => {
             if (err) {
