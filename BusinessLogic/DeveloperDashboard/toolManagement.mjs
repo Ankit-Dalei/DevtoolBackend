@@ -286,8 +286,9 @@ export const getGeneratorTools = async (req, res) => {
 
 
 // file write code
+
 export const getToolByIdforrender = async (req, res) => {
-    const { id } = req.params; // Fetch the tool id from the request body
+    const { id } = req.params; // Fetch the tool id from the request parameters
     // console.log(id)
     try {
         // Fetch tool from the database using the id
@@ -300,19 +301,30 @@ export const getToolByIdforrender = async (req, res) => {
 
         const toolCode = tool.toolCode;
         // console.log(toolCode)
+        
         // Define the path to the target JS file
         const filePath = path.join(__dirname, '../../../DevToolsB Frontend/src/Components/Tools/CategoryAndSubcategory Handling/CGCcodeRenderHandling.jsx');
         // console.log(filePath)
-        // Write the toolCode to tooloutput.js
-        fs.writeFile(filePath, toolCode, (err) => {
+
+        // First, clear the content of the file
+        fs.writeFile(filePath, '', (err) => {
             if (err) {
-                console.error('Error writing to file:', err);
-                return res.status(500).json({ message: 'Failed to write toolCode to file' });
+                console.error('Error clearing the file:', err);
+                return res.status(500).json({ message: 'Failed to clear the file' });
             }
 
-            console.log('ToolCode written to tooloutput.js');
-            return res.status(200).json({ message: 'ToolCode successfully written to file' });
+            // Now, write the toolCode to the file
+            fs.writeFile(filePath, toolCode, (err) => {
+                if (err) {
+                    console.error('Error writing to file:', err);
+                    return res.status(500).json({ message: 'Failed to write toolCode to file' });
+                }
+
+                console.log('ToolCode written to file successfully');
+                return res.status(200).json({ message: 'ToolCode successfully written to file' });
+            });
         });
+
     } catch (error) {
         console.error('Error fetching tool or writing to file:', error);
         res.status(500).json({ message: 'Internal server error' });
