@@ -8,7 +8,6 @@ import { getTotalDeveloperByRole, getTotalUsersByRole } from "./BusinessLogic/Ad
 import { deleteUserByEmail, getAllDeveloper, getAllUsers, updateUserRoleByEmail } from "./BusinessLogic/AdminDashboard/admintotalUser.mjs";
 import { createTool, deleteTool, getAllTools, getCalculatorTools, getConverterTools, getGeneratorTools, getToolById, getToolByIdforrender, getToolBySubCatagory, getToolBySubSubCatagory, getTotalCalculatorCount, getTotalConverterCount, getTotalGeneratorCount, getTotaltoolCount, updateTool } from "./BusinessLogic/DeveloperDashboard/toolManagement.mjs";
 import bodyParser from 'body-parser';
-
 // mongoDb connection
 mongoose.connect('mongodb://127.0.0.1:27017/DevToolsB')
 .then(()=>{console.log("mongoDb connected")})
