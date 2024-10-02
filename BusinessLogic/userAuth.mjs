@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import multer from "multer";
 import { User } from "../Services/userService.mjs";
+import { encryptId, decryptId } from "../toolsAuth/decryption.mjs"; // Import encryption & decryption functions
 
 // Set up multer to handle form-data
 const upload = multer();
@@ -27,13 +28,22 @@ export const userAuth = [
             }
 
             // Compare the provided password with the stored hashed password
-            const isMatch = await User.comparePassword(password,AuthUser);
+            const isMatch = await User.comparePassword(password, AuthUser);
             if (!isMatch) {
                 return res.status(401).send({ message: "Invalid password" });
             }
 
-            // Successful authentication
-            res.status(200).send({ message: "Authentication successful", user: AuthUser });
+            // Encrypt the _id
+            const encryptedId = encryptId(AuthUser._id.toString()); // Encrypt the ID
+
+            // Successful authentication, send encrypted _id
+            res.status(200).send({
+                message: "Authentication successful",
+                user: {
+                    ...AuthUser.toObject(),
+                    _id: encryptedId // Send encrypted _id
+                }
+            });
         } catch (err) {
             res.status(500).send({ error: "Server error", details: err.message });
         }
