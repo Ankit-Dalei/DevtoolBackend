@@ -306,12 +306,13 @@ export const getToolByIdforrender = async (req, res) => {
         const filePath = path.join(__dirname, '../../../DevToolsB Frontend/src/Components/Tools/CategoryAndSubcategory Handling/CGCcodeRenderHandling.jsx');
         // console.log(filePath)
 
-        // First, clear the content of the file
-        fs.writeFile(filePath, '', (err) => {
+           // Truncate (clear) the file first
+        fs.truncate(filePath, 0, (err) => {
             if (err) {
                 console.error('Error clearing the file:', err);
                 return res.status(500).json({ message: 'Failed to clear the file' });
             }
+        });
 
             // Now, write the toolCode to the file
             fs.writeFile(filePath, toolCode, (err) => {
@@ -323,7 +324,6 @@ export const getToolByIdforrender = async (req, res) => {
                 console.log('ToolCode written to file successfully');
                 return res.status(200).json({ message: 'ToolCode successfully written to file' });
             });
-        });
 
     } catch (error) {
         console.error('Error fetching tool or writing to file:', error);

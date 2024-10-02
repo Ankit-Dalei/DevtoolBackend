@@ -2,10 +2,10 @@ import mongoose from "mongoose";
 import multer from "multer";
 import { User } from "../Services/userService.mjs";
 
-const upload = multer({
-    storage: multer.memoryStorage(),
-    limits: { fileSize: 5 * 1024 * 1024 },
-});
+// const upload = multer({
+//     storage: multer.memoryStorage(),
+//     limits: { fileSize: 5 * 1024 * 1024 },
+// });
 
 export const logindata = [
     // upload.single('profilePhoto'),
