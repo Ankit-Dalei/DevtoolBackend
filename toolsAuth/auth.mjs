@@ -1,7 +1,7 @@
 import { User } from "../Services/userService.mjs";
-import { decryptId } from "../toolsAuth/cryptoTools.mjs"; // Assuming this function exists
+import { decryptId } from "../toolsAuth/decryption.mjs"; 
 
-export default authMiddleware = async (req, res, next) => {
+const auth = async (req, res, next) => {
   try {
     // Retrieve encrypted user ID from params, body, or headers
     const encryptedUserId = req.params.userId || req.body.userId || req.headers['user-id'];
@@ -11,7 +11,7 @@ export default authMiddleware = async (req, res, next) => {
     }
 
     // Decrypt the user ID before querying the database
-    const decryptedUserId = decryptId(encryptedUserId);
+    const decryptedUserId = await decryptId(encryptedUserId);
 
     // Find the user by the decrypted ID
     const user = await User.findById(decryptedUserId);
@@ -29,3 +29,4 @@ export default authMiddleware = async (req, res, next) => {
   }
 };
 
+export default auth;

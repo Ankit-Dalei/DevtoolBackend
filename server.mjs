@@ -8,6 +8,7 @@ import { getTotalDeveloperByRole, getTotalUsersByRole } from "./BusinessLogic/Ad
 import { deleteUserByEmail, getAllDeveloper, getAllUsers, updateUserRoleByEmail } from "./BusinessLogic/AdminDashboard/admintotalUser.mjs";
 import { createTool, deleteTool, getAllTools, getCalculatorTools, getConverterTools, getGeneratorTools, getToolById, getToolByIdforrender, getToolBySubCatagory, getToolBySubSubCatagory, getTotalCalculatorCount, getTotalConverterCount, getTotalGeneratorCount, getTotaltoolCount, updateTool } from "./BusinessLogic/DeveloperDashboard/toolManagement.mjs";
 import bodyParser from 'body-parser';
+import auth from "./toolsAuth/auth.mjs";
 // mongoDb connection
 mongoose.connect('mongodb://127.0.0.1:27017/DevToolsB')
 .then(()=>{console.log("mongoDb connected")})
@@ -36,29 +37,29 @@ app.post('/send-otp', sendOtp);
 app.post('/verify-otp', verifyOtp);
 app.post('/change-password', changePassword);
 // Admin end points
-app.get('/gettotalUserCounts',getTotalUsersByRole)
-app.get('/gettotalDeveloperCounts',getTotalDeveloperByRole)
-app.get('/getallUser',getAllUsers)
-app.get('/getallDeveloper',getAllDeveloper)
-app.put('/updateUserRoleByEmail',updateUserRoleByEmail)
-app.delete('/users/:email', deleteUserByEmail);
+app.get('/gettotalUserCounts',auth,getTotalUsersByRole)
+app.get('/gettotalDeveloperCounts',auth,getTotalDeveloperByRole)
+app.get('/getallUser',auth,getAllUsers)
+app.get('/getallDeveloper',auth,getAllDeveloper)
+app.put('/updateUserRoleByEmail',auth,updateUserRoleByEmail)
+app.delete('/users/:email',auth, deleteUserByEmail);
 // Developer end points
-app.post('/toolCreated', createTool);
-app.get('/tools', getAllTools);
-app.get('/toolsCount', getTotaltoolCount);
-app.get('/toolsCalculatorCount', getTotalCalculatorCount);
-app.get('/toolsConverterCount', getTotalConverterCount);
-app.get('/toolsGeneratorCount', getTotalGeneratorCount);
-app.get('/toolsCalculator', getCalculatorTools);
-app.get('/toolsConverter', getConverterTools);
-app.get('/toolsGenerator', getGeneratorTools);
-app.get('/tools/:id', getToolById);
-app.get('/toolsRender/:id', getToolByIdforrender);
+app.post('/toolCreated',auth, createTool);
+app.get('/tools',auth, getAllTools);
+app.get('/toolsCount',auth, getTotaltoolCount);
+app.get('/toolsCalculatorCount',auth, getTotalCalculatorCount);
+app.get('/toolsConverterCount',auth, getTotalConverterCount);
+app.get('/toolsGeneratorCount',auth, getTotalGeneratorCount);
+app.get('/toolsCalculator',auth, getCalculatorTools);
+app.get('/toolsConverter',auth, getConverterTools);
+app.get('/toolsGenerator',auth, getGeneratorTools);
+app.get('/tools/:id',auth, getToolById);
+app.get('/toolsRender/:id',auth, getToolByIdforrender);
 // app.get('/toolsByMainCatagory/:toolMainCatagory', getToolByIdAndMainCatagory);
-app.get('/toolsBySubCatagory/:toolSubCatagory', getToolBySubCatagory);
-app.get('/toolsBySubSubCatagory/:toolSubSubCatagory', getToolBySubSubCatagory);
-app.put('/toolsUpdate/:id', updateTool);
-app.delete('/toolsDelete/:id', deleteTool);
+app.get('/toolsBySubCatagory/:toolSubCatagory',auth, getToolBySubCatagory);
+app.get('/toolsBySubSubCatagory/:toolSubSubCatagory',auth, getToolBySubSubCatagory);
+app.put('/toolsUpdate/:id',auth, updateTool);
+app.delete('/toolsDelete/:id',auth, deleteTool);
 
 
 

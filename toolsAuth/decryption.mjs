@@ -1,5 +1,4 @@
 import crypto from 'crypto';
-
 const algorithm = 'aes-256-cbc'; // AES encryption algorithm
 const secretKey = crypto.randomBytes(32); // 256-bit key
 const iv = crypto.randomBytes(16); // Initialization vector
