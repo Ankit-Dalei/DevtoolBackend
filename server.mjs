@@ -37,7 +37,7 @@ app.post('/send-otp', sendOtp);
 app.post('/verify-otp', verifyOtp);
 app.post('/change-password', changePassword);
 // Admin end points
-app.get('/gettotalUserCounts',auth,getTotalUsersByRole)
+app.get('/gettotalUserCounts/:userId',auth,getTotalUsersByRole)
 app.get('/gettotalDeveloperCounts',auth,getTotalDeveloperByRole)
 app.get('/getallUser',auth,getAllUsers)
 app.get('/getallDeveloper',auth,getAllDeveloper)
