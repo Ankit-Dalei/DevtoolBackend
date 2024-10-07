@@ -38,28 +38,28 @@ app.post('/verify-otp', verifyOtp);
 app.post('/change-password', changePassword);
 // Admin end points
 app.get('/gettotalUserCounts/:userId',auth,getTotalUsersByRole)
-app.get('/gettotalDeveloperCounts',auth,getTotalDeveloperByRole)
-app.get('/getallUser',auth,getAllUsers)
-app.get('/getallDeveloper',auth,getAllDeveloper)
-app.put('/updateUserRoleByEmail',auth,updateUserRoleByEmail)
-app.delete('/users/:email',auth, deleteUserByEmail);
+app.get('/gettotalDeveloperCounts/:userId',auth,getTotalDeveloperByRole)
+app.get('/getallUser/:userId',auth,getAllUsers)
+app.get('/getallDeveloper/:userId',auth,getAllDeveloper)
+app.put('/updateUserRoleByEmail/:userId',auth,updateUserRoleByEmail)
+app.delete('/users/:email/:userId',auth, deleteUserByEmail);
 // Developer end points
-app.post('/toolCreated',auth, createTool);
-app.get('/tools',auth, getAllTools);
-app.get('/toolsCount',auth, getTotaltoolCount);
-app.get('/toolsCalculatorCount',auth, getTotalCalculatorCount);
-app.get('/toolsConverterCount',auth, getTotalConverterCount);
-app.get('/toolsGeneratorCount',auth, getTotalGeneratorCount);
-app.get('/toolsCalculator',auth, getCalculatorTools);
-app.get('/toolsConverter',auth, getConverterTools);
-app.get('/toolsGenerator',auth, getGeneratorTools);
-app.get('/tools/:id',auth, getToolById);
-app.get('/toolsRender/:id',auth, getToolByIdforrender);
+app.post('/toolCreated/:userId',auth, createTool);
+app.get('/tools/:userId',auth, getAllTools);
+app.get('/toolsCount/:userId',auth, getTotaltoolCount);
+app.get('/toolsCalculatorCount/:userId',auth, getTotalCalculatorCount);
+app.get('/toolsConverterCount/:userId',auth, getTotalConverterCount);
+app.get('/toolsGeneratorCount/:userId',auth, getTotalGeneratorCount);
+app.get('/toolsCalculator/:userId',auth, getCalculatorTools);
+app.get('/toolsConverter/:userId',auth, getConverterTools);
+app.get('/toolsGenerator/:userId',auth, getGeneratorTools);
+app.get('/tools/:id/:userId',auth, getToolById);
+app.get('/toolsRender/:id/:userId',auth, getToolByIdforrender);
 // app.get('/toolsByMainCatagory/:toolMainCatagory', getToolByIdAndMainCatagory);
-app.get('/toolsBySubCatagory/:toolSubCatagory',auth, getToolBySubCatagory);
-app.get('/toolsBySubSubCatagory/:toolSubSubCatagory',auth, getToolBySubSubCatagory);
-app.put('/toolsUpdate/:id',auth, updateTool);
-app.delete('/toolsDelete/:id',auth, deleteTool);
+app.get('/toolsBySubCatagory/:toolSubCatagory/:userId',auth, getToolBySubCatagory);
+app.get('/toolsBySubSubCatagory/:toolSubSubCatagory/:userId',auth, getToolBySubSubCatagory);
+app.put('/toolsUpdate/:id/:userId',auth, updateTool);
+app.delete('/toolsDelete/:id/:userId',auth, deleteTool);
 
 
 
