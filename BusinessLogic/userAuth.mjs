@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 import multer from "multer";
 import { User } from "../Services/userService.mjs";
 import { encryptId, decryptId } from "../toolsAuth/decryption.mjs"; // Import encryption & decryption functions
-import crypto from "crypto"; // Optional: to generate a unique random value
 
 // Set up multer to handle form-data
 const upload = multer();
@@ -34,23 +33,19 @@ export const userAuth = [
                 return res.status(401).send({ message: "Invalid password" });
             }
 
-            // Generate a dynamic component for encryption (optional but recommended)
-            const uniqueValue = crypto.randomBytes(16).toString("hex"); // Generate a unique value
-            const dynamicData = `${AuthUser._id.toString()}-${uniqueValue}`; // Combine the user ID with a unique value
-
-            // Encrypt the dynamic data to create a new encrypted ID each time
-            const encryptedId = encryptId(dynamicData);
+            // Encrypt the _id
+            const encryptedId = encryptId(AuthUser._id.toString()); // Encrypt the ID
 
             // Successful authentication, send encrypted _id
             res.status(200).send({
                 message: "Authentication successful",
                 user: {
                     ...AuthUser.toObject(),
-                    _id: encryptedId // Send new encrypted _id
+                    _id: encryptedId // Send encrypted _id
                 }
             });
         } catch (err) {
             res.status(500).send({ error: "Server error", details: err.message });
         }
     }
-];
+]; 
