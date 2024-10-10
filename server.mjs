@@ -10,25 +10,27 @@ import { createTool, deleteTool, getAllTools, getCalculatorTools, getConverterTo
 import bodyParser from 'body-parser';
 import auth from "./toolsAuth/auth.mjs";
 // mongoDb connection
-mongoose.connect('mongodb://127.0.0.1:27017/DevToolsB')
+mongoose.connect('mongodb+srv://bhabanishankarr21:DevToolsB$2004@devtoolsb-db.88pi5.mongodb.net/DevToolsB')
 .then(()=>{console.log("mongoDb connected")})
 .catch((err)=>{console.log("error",err)});
 
 // /port connection
 const app = express();
 const port = 8080;
-app.use(bodyParser.json({ limit: '2mb' }));
-app.use(bodyParser.urlencoded({ limit: '2mb', extended: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.use(express.json());
-// Signup end points
-app.post('/Signup',logindata,(req, res) => {
-  return res.status(200).json({
-    msg:"success"
-  });
+// Signup end pointsapp.post('/Signup', logindata, (req, res) => {
+app.post('/Signup', logindata, (req, res) => {
+  try {
+    return res.status(200).json({ msg: "success" });
+  } catch (error) {
+    return res.status(500).json({ msg: "Internal Server Error", error });
+  }
 });
+
+
 // login end points
 app.post('/login',userAuth);
 // Forgot password end point
