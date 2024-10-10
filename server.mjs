@@ -25,7 +25,6 @@ app.use(cors());
 app.use(express.json());
 // Signup end points
 app.post('/Signup',logindata,(req, res) => {
-  console.log(req.body)
   return res.status(200).json({
     msg:"success"
   });
