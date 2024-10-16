@@ -1,118 +1,122 @@
-import multer from "multer";
-import { User } from "../Services/userService.mjs";
-import nodemailer from 'nodemailer';
-import crypto from 'crypto';
-import bcrypt from 'bcryptjs';
-import { emailFormat } from "../emailFormat.mjs";
+// import multer from "multer";
+// import { User } from "../Services/userService.mjs"; // Assume this handles user DB operations
+// import nodemailer from 'nodemailer';
+// import crypto from 'crypto';
+// import bcrypt from 'bcryptjs';
+// import { emailFormat } from "../emailFormat.mjs"; // Your custom email format
+// import dotenv from 'dotenv';
 
-// Create a transporter for sending emails
-const transporter = nodemailer.createTransport({
-    service: 'gmail', // or another email service
-    auth: {
-        user: "codehub976@gmail.com",
-        pass: "",
-    },
-});
+// // Load environment variables from .env file
+// dotenv.config();
 
-// Set up multer to handle form-data
-const upload = multer();
+// // Create a transporter for sending emails
+// const transporter = nodemailer.createTransport({
+//     service: 'gmail',
+//     auth: {
+//         user: process.env.EMAIL_USER,
+//         pass: process.env.EMAIL_PASS,
+//     },
+// });
 
-// In-memory storage for OTPs and tokens
-const otpStore = new Map();
-const tokenStore = new Map();
+// // Set up multer to handle form-data
+// const upload = multer();
 
-// Generate a random OTP
-const generateOtp = () => crypto.randomBytes(3).toString('hex'); // Generates a 6-character OTP
+// // In-memory storage for OTPs and tokens (consider using Redis in production)
+// const otpStore = new Map();
+// const tokenStore = new Map();
 
-// Middleware to send OTP to user's email
-export const sendOtp = [
-    upload.none(),
-    async (req, res) => {
-        const { email } = req.body;
+// // Generate a random OTP (6-character hex string)
+// const generateOtp = () => crypto.randomBytes(3).toString('hex');
 
-        try {
-            const user = await User.findByEmail(email);
-            if (!user) {
-                return res.status(404).json({ message: 'User not found' });
-            }
+// // Middleware to send OTP to user's email
+// export const sendOtp = [
+//     upload.none(),
+//     async (req, res) => {
+//         const { email } = req.body;
 
-            const otp = generateOtp();
-            otpStore.set(email, { otp, expiresAt: Date.now() + 300000 }); // OTP valid for 5 minutes
+//         try {
+//             const user = await User.findByEmail(email); // Ensure this method exists in your user service
+//             if (!user) {
+//                 return res.status(404).json({ message: 'User not found' });
+//             }
 
-            // Send OTP email
-            await transporter.sendMail({
-                from: 'codehub976@gmail.com',
-                to: email,
-                subject: 'Your OTP for Password Reset',
-                // text: `Your OTP is ${otp}. It is valid for 5 minutes.`,
-                html: emailFormat(otp)
-            });
+//             const otp = generateOtp();
+//             otpStore.set(email, { otp, expiresAt: Date.now() + 300000 }); // OTP valid for 5 minutes
 
-            return res.status(200).json({ message: 'OTP sent successfully' });
-        } catch (error) {
-            console.error('Error sending OTP:', error);
-            return res.status(500).json({ message: 'Failed to send OTP' });
-        }
-    }
-];
+//             // Send OTP email
+//             await transporter.sendMail({
+//                 from: process.env.EMAIL_USER,
+//                 to: email,
+//                 subject: 'Your OTP for Password Reset',
+//                 html: emailFormat(otp), // Custom email template
+//             });
 
-// Middleware to verify OTP and generate a password reset token
-export const verifyOtp = [
-    upload.none(),
-    async (req, res) => {
-        const { email, otp } = req.body;
+//             return res.status(200).json({ message: 'OTP sent successfully' });
+//         } catch (error) {
+//             console.error('Error sending OTP:', error);
+//             return res.status(500).json({ message: 'Failed to send OTP' });
+//         }
+//     }
+// ];
 
-        try {
-            const storedOtp = otpStore.get(email);
-            if (!storedOtp || storedOtp.expiresAt < Date.now()) {
-                return res.status(400).json({ message: 'OTP expired or invalid' });
-            }
+// // Middleware to verify OTP and generate a password reset token
+// export const verifyOtp = [
+//     upload.none(),
+//     async (req, res) => {
+//         const { email, otp } = req.body;
 
-            if (storedOtp.otp !== otp) {
-                return res.status(400).json({ message: 'Incorrect OTP' });
-            }
+//         try {
+//             const storedOtp = otpStore.get(email);
+//             if (!storedOtp || storedOtp.expiresAt < Date.now()) {
+//                 return res.status(400).json({ message: 'OTP expired or invalid' });
+//             }
 
-            // Generate a password reset token
-            const resetToken = crypto.randomBytes(32).toString('hex');
-            tokenStore.set(email, resetToken);
+//             if (storedOtp.otp !== otp) {
+//                 return res.status(400).json({ message: 'Incorrect OTP' });
+//             }
 
-            // Return the reset token
-            return res.status(200).json({ message: 'OTP verified', resetToken });
-        } catch (error) {
-            console.error('Error verifying OTP:', error);
-            return res.status(500).json({ message: 'Failed to verify OTP' });
-        }
-    }
-];
+//             // Generate a password reset token with expiry time
+//             const resetToken = crypto.randomBytes(32).toString('hex');
+//             tokenStore.set(email, { resetToken, expiresAt: Date.now() + 600000 }); // Token valid for 10 minutes
 
-// Middleware to change the password
-export const changePassword = [
-    upload.none(),
-    async (req, res) => {
-        const { email, resetToken, newPassword } = req.body;
+//             // Return the reset token
+//             return res.status(200).json({ message: 'OTP verified', resetToken });
+//         } catch (error) {
+//             console.error('Error verifying OTP:', error);
+//             return res.status(500).json({ message: 'Failed to verify OTP' });
+//         }
+//     }
+// ];
 
-        try {
-            const storedToken = tokenStore.get(email);
-            if (storedToken !== resetToken) {
-                return res.status(400).json({ message: 'Invalid or expired token' });
-            }
+// // Middleware to change the password
+// export const changePassword = [
+//     upload.none(),
+//     async (req, res) => {
+//         const { email, resetToken, newPassword } = req.body;
 
-            const user = await User.findByEmail(email);
-            if (!user) {
-                return res.status(404).json({ message: 'User not found' });
-            }
+//         try {
+//             const tokenData = tokenStore.get(email);
+//             if (!tokenData || tokenData.resetToken !== resetToken || tokenData.expiresAt < Date.now()) {
+//                 return res.status(400).json({ message: 'Invalid or expired token' });
+//             }
 
-            // Hash the new password before saving
-            user.password = newPassword;
-            await user.save();
+//             const user = await User.findByEmail(email);
+//             if (!user) {
+//                 return res.status(404).json({ message: 'User not found' });
+//             }
 
-            // Clean up the token
-            tokenStore.delete(email);
+//             // Hash the new password before saving
+//             const hashedPassword = await bcrypt.hash(newPassword, 10);
+//             user.password = hashedPassword;
+//             await user.save();
 
-            return res.status(200).json({ message: 'Password updated successfully' });
-        } catch (error) {
-            console.error('Error updating password:', error);
-            return res.status(500).json({ message: 'Failed to update password' });
-        }
-    }
-];
+//             // Clean up the token
+//             tokenStore.delete(email);
+
+//             return res.status(200).json({ message: 'Password updated successfully' });
+//         } catch (error) {
+//             console.error('Error updating password:', error);
+//             return res.status(500).json({ message: 'Failed to update password' });
+//         }
+//     }
+// ];
