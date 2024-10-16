@@ -65,7 +65,8 @@ app.delete('/toolsDelete/:id/:userId',auth, deleteTool);
 
 
 
-// port listening
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+// Start server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
