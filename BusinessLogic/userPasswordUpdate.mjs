@@ -2,7 +2,7 @@ import multer from "multer";
 import { User } from "../Services/userService.mjs";
 import nodemailer from 'nodemailer';
 import crypto from 'crypto';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import { emailFormat } from "../emailFormat.mjs";
 
 // Create a transporter for sending emails
