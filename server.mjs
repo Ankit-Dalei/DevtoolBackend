@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import { logindata } from "./BusinessLogic/userlogin.mjs";
 import { userAuth } from "./BusinessLogic/userAuth.mjs";
-// import { changePassword, sendOtp, verifyOtp } from "./BusinessLogic/userPasswordUpdate.mjs";
+import { changePassword, sendOtp, verifyOtp } from "./BusinessLogic/userPasswordUpdate.mjs";
 import { getTotalDeveloperByRole, getTotalUsersByRole } from "./BusinessLogic/AdminDashboard/admindashboarddata.mjs";
 import { deleteUserByEmail, getAllDeveloper, getAllUsers, updateUserRoleByEmail } from "./BusinessLogic/AdminDashboard/admintotalUser.mjs";
 import { createTool, deleteTool, getAllTools, getCalculatorTools, getConverterTools, getGeneratorTools, getToolById, getToolByIdforrender, getToolBySubCatagory, getToolBySubSubCatagory, getTotalCalculatorCount, getTotalConverterCount, getTotalGeneratorCount, getTotaltoolCount, updateTool } from "./BusinessLogic/DeveloperDashboard/toolManagement.mjs";
@@ -34,9 +34,9 @@ app.post('/Signup', logindata, (req, res) => {
 // login end points
 app.post('/login',userAuth);
 // Forgot password end point
-// app.post('/send-otp', sendOtp);
-// app.post('/verify-otp', verifyOtp);
-// app.post('/change-password', changePassword);
+app.post('/send-otp', sendOtp);
+app.post('/verify-otp', verifyOtp);
+app.post('/change-password', changePassword);
 // Admin end points
 app.get('/gettotalUserCounts/:userId',auth,getTotalUsersByRole)
 app.get('/gettotalDeveloperCounts/:userId',auth,getTotalDeveloperByRole)
@@ -66,7 +66,7 @@ app.delete('/toolsDelete/:id/:userId',auth, deleteTool);
 
 
 // Start server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+// port listening
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
 });

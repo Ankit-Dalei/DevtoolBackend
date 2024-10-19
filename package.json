@@ -1,11 +1,11 @@
 {
   "name": "devtoolbackend",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.mjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.mjs",
-    "build": "npm install && tsc"
+    "build": "npm install"
   },
   "keywords": [],
   "author": "",
