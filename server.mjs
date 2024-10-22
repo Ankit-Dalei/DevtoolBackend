@@ -21,6 +21,10 @@ mongoose.connect(process.env.MONGO_URL)
     console.log("error", err);
   });
 
+app.use((req, res, next) => {
+  res.setHeader("Content-Security-Policy", "default-src 'self'; script-src 'self' https://vercel.live; object-src 'none';");
+  next();
+});
 
 // /port connection
 const app = express();
