@@ -19,7 +19,12 @@ const app = express();
 const port = 8080;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
+// Allow CORS for the specific origin
+app.use(cors({
+  origin: 'https://project-dev-tools-b.vercel.app',
+  methods: 'GET,POST,PUT,DELETE', // Specify allowed methods
+  credentials: true // If credentials like cookies or headers are needed
+}));
 app.use(express.json());
 // Signup end pointsapp.post('/Signup', logindata, (req, res) => {
 app.post('/Signup', logindata, (req, res) => {
