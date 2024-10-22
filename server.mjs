@@ -21,22 +21,22 @@ mongoose.connect(process.env.MONGO_URL)
     console.log("error", err);
   });
 
+
+// /port connection
+const app = express();
 app.use((req, res, next) => {
   res.setHeader("Content-Security-Policy", "default-src 'self'; script-src 'self' https://vercel.live; object-src 'none';");
   next();
 });
-
-// /port connection
-const app = express();
-const PORT = process.env.PORT || 8080;
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-// Allow CORS for the specific origin
 app.use(cors({
   origin: 'https://project-dev-tools-b.vercel.app',
   methods: 'GET,POST,PUT,DELETE', // Specify allowed methods
   credentials: true // If credentials like cookies or headers are needed
 }));
+const PORT = process.env.PORT || 8080;
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use(express.json());
 // Signup end pointsapp.post('/Signup', logindata, (req, res) => {
 app.post('/Signup', logindata, (req, res) => {
