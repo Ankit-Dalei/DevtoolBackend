@@ -1,3 +1,4 @@
+import dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
@@ -9,14 +10,21 @@ import { deleteUserByEmail, getAllDeveloper, getAllUsers, updateUserRoleByEmail 
 import { createTool, deleteTool, getAllTools, getCalculatorTools, getConverterTools, getGeneratorTools, getToolById, getToolByIdforrender, getToolBySubCatagory, getToolBySubSubCatagory, getTotalCalculatorCount, getTotalConverterCount, getTotalGeneratorCount, getTotaltoolCount, updateTool } from "./BusinessLogic/DeveloperDashboard/toolManagement.mjs";
 import bodyParser from 'body-parser';
 import auth from "./toolsAuth/auth.mjs";
-// mongoDb connection
-mongoose.connect('mongodb+srv://bhabanishankarr21:DevToolsB$2004@devtoolsb-db.88pi5.mongodb.net/DevToolsB')
-.then(()=>{console.log("mongoDb connected")})
-.catch((err)=>{console.log("error",err)});
+dotenv.config();
+
+// Connect to MongoDB
+mongoose.connect(process.env.MONGO_URL)
+  .then(() => {
+    console.log("mongoDb connected");
+  })
+  .catch((err) => {
+    console.log("error", err);
+  });
+
 
 // /port connection
 const app = express();
-const port = 8080;
+const PORT = process.env.PORT || 8080;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 // Allow CORS for the specific origin
@@ -72,6 +80,6 @@ app.delete('/toolsDelete/:id/:userId',auth, deleteTool);
 
 // Start server
 // port listening
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
