@@ -30,7 +30,14 @@ app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   next();
 });
+const corsOptions = {
+    origin: 'https://project-dev-tools-b.vercel.app',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    preflightContinue: false,
+    optionsSuccessStatus: 204
+};
 
+app.use(cors(corsOptions));
 
 // Middleware to handle JSON requests
 app.use(express.json());
