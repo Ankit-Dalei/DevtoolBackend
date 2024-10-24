@@ -8,6 +8,8 @@ import { getTotalDeveloperByRole, getTotalUsersByRole } from "./BusinessLogic/Ad
 import { deleteUserByEmail, getAllDeveloper, getAllUsers, updateUserRoleByEmail } from "./BusinessLogic/AdminDashboard/admintotalUser.mjs";
 import { createTool, deleteTool, getAllTools, getCalculatorTools, getConverterTools, getGeneratorTools, getToolById, getToolByIdforrender, getToolBySubCatagory, getToolBySubSubCatagory, getTotalCalculatorCount, getTotalConverterCount, getTotalGeneratorCount, getTotaltoolCount, updateTool } from "./BusinessLogic/DeveloperDashboard/toolManagement.mjs";
 import auth from "./toolsAuth/auth.mjs";
+import cors from 'cors';
+
 
 dotenv.config();
 
