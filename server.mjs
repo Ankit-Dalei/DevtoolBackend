@@ -10,6 +10,7 @@ import { deleteUserByEmail, getAllDeveloper, getAllUsers, updateUserRoleByEmail 
 import { createTool, deleteTool, getAllTools, getCalculatorTools, getConverterTools, getGeneratorTools, getToolById, getToolByIdforrender, getToolBySubCatagory, getToolBySubSubCatagory, getTotalCalculatorCount, getTotalConverterCount, getTotalGeneratorCount, getTotaltoolCount, updateTool } from "./BusinessLogic/DeveloperDashboard/toolManagement.mjs";
 import bodyParser from 'body-parser';
 import auth from "./toolsAuth/auth.mjs";
+import serveFavicon from "serve-favicon";
 dotenv.config();
 
 // Connect to MongoDB
@@ -28,6 +29,7 @@ app.use((req, res, next) => {
   res.setHeader("Content-Security-Policy", "default-src 'self'; script-src 'self' https://vercel.live; object-src 'none';");
   next();
 });
+app.use(serveFavicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(cors({
   origin: 'https://project-dev-tools-b.vercel.app',
   methods: 'GET,POST,PUT,DELETE', // Specify allowed methods
